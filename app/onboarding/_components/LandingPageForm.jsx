@@ -45,7 +45,7 @@ function LandingPageForm() {
   }
 
   return (
-    <div className="bg-[#E4E6EB] rounded-2xl py-[20px] px-[15px] ">
+    <div className="bg-[#F4F5F7] rounded-2xl py-[20px] px-[15px]">
       {/* Pass the form object to the Form component */}
       <h1 className="text-[30px] font-bold">General Info</h1>
       <Form {...form}>
@@ -60,7 +60,7 @@ function LandingPageForm() {
                 <FormLabel className="text-xl font-bold">Course title</FormLabel>
                 <FormControl>
                   {/* Spread field props into Input */}
-                  <Input className="rounded-2xl h-12" placeholder="Insert your course title" {...field} />
+                  <Input className="h-12 rounded-2xl" placeholder="Insert your course title" {...field} />
                 </FormControl>
                 <FormDescription>
                   Your title should be a mix of attention-grabbing, informative,
@@ -82,7 +82,7 @@ function LandingPageForm() {
                 <FormLabel className="text-xl font-bold">Course subtitle</FormLabel>
                 <FormControl>
                   {/* Spread field props into Input */}
-                  <Input className="rounded-2xl h-12" placeholder="Insert your course subtitle" {...field} />
+                  <Input className="h-12 rounded-2xl" placeholder="Insert your course subtitle" {...field} />
                 </FormControl>
                 <FormDescription>
                   Use 1 or 2 related keywords, and mention 3-4 of the most

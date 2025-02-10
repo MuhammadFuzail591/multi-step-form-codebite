@@ -1,5 +1,7 @@
 import { Inter } from "next/font/google";
 import { OnboardingProvider } from "@/context/OnboardingContext";
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import FormSideBar from "./_components/FormSideBar";
 const inter = Inter({ subsets: ["latin"] });
 
 
@@ -13,8 +15,15 @@ export default function OnboardingLayout({ children }) {
     <html lang="en">
       <body>
         <OnboardingProvider>
-            {children}
+          <SidebarProvider>
+            <FormSideBar />
+            <main>
+              <SidebarTrigger />
+              {children}
+            </main>
+          </SidebarProvider>
         </OnboardingProvider>
+
       </body>
     </html>
   );
