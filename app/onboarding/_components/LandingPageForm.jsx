@@ -1,72 +1,84 @@
-"use client";
-import { useOnboarding } from "@/context/OnboardingContext";
+'use client';
+import { useOnboarding } from '@/context/OnboardingContext';
 import {
   Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea"
-
-import { useRouter } from "next/navigation";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useRouter } from 'next/navigation';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Button } from '@/components/ui/button';
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '@/components/ui/dropdown-menu';
+import { ChevronDown, ChevronRight } from 'lucide-react'; // Import the right arrow icon
 
 function LandingPageForm() {
   const router = useRouter();
   const { updateOnboardingData } = useOnboarding();
 
-  // Initialize useForm
   const form = useForm({
-    defaultValues: { courseTitle: "", courseSubtitle: "", courseDescription: "" }, // Corrected prop name
-    mode: "onBlur",
+    defaultValues: {
+      courseTitle: '',
+      courseSubtitle: '',
+      courseDescription: '',
+      courseCategory: '', // Existing field
+      courseLanguage: '', // New field
+      courseLevel: '', // New field
+      courseSubcategory: '', // New field
+    },
+    mode: 'onBlur',
   });
 
   const {
     handleSubmit,
     control,
     formState: { errors },
-    register
+    register,
   } = form;
-  //function to count words
-  const wordCount = (text) => {
-    return text.trim().split(/\s+/).length; // Splits text by spaces and counts words
+
+  const wordCount = text => {
+    return text.trim().split(/\s+/).length;
   };
 
-  // Form submission handler
   function onSubmit(data) {
     updateOnboardingData(data);
     console.log(data);
   }
 
   return (
-    <div className="bg-[#F4F5F7] rounded-2xl py-[20px] px-[15px]">
-      {/* Pass the form object to the Form component */}
-      <h1 className="text-[30px] font-bold">General Info</h1>
-      <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)}>
+    <Form {...form}>
+      <form onSubmit={handleSubmit(onSubmit)} className='space-y-8'>
+        {/* General Info Section */}
+        <div className='bg-[#F4F5F7] rounded-2xl py-[20px] px-[15px]'>
+          <h1 className='text-[30px] font-bold'>General Info</h1>
           {/* Course Title Field */}
           <FormField
             control={control}
-            name="courseTitle"
-            rules={{ required: "Course Title is Required" }}
+            name='courseTitle'
+            rules={{ required: 'Course Title is Required' }}
             render={({ field }) => (
-              <FormItem className="mt-3">
-                <FormLabel className="text-xl font-bold">Course title</FormLabel>
+              <FormItem className='mt-3'>
                 <FormControl>
-                  {/* Spread field props into Input */}
-                  <Input className="h-12 rounded-2xl" placeholder="Insert your course title" {...field} />
+                  <Input
+                    className='h-12 rounded-2xl'
+                    placeholder='Insert your course title'
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   Your title should be a mix of attention-grabbing, informative,
                   and optimized for search.
                 </FormDescription>
-                {/* Display error message */}
                 <FormMessage>{errors.courseTitle?.message}</FormMessage>
               </FormItem>
             )}
@@ -75,58 +87,201 @@ function LandingPageForm() {
           {/* Course Subtitle Field */}
           <FormField
             control={control}
-            name="courseSubtitle"
-            rules={{ required: "Course Subtitle is Required" }}
+            name='courseSubtitle'
+            rules={{ required: 'Course Subtitle is Required' }}
             render={({ field }) => (
-              <FormItem className="mt-3">
-                <FormLabel className="text-xl font-bold">Course subtitle</FormLabel>
+              <FormItem className='mt-3'>
                 <FormControl>
-                  {/* Spread field props into Input */}
-                  <Input className="h-12 rounded-2xl" placeholder="Insert your course subtitle" {...field} />
+                  <Input
+                    className='h-12 rounded-2xl'
+                    placeholder='Insert your course subtitle'
+                    {...field}
+                  />
                 </FormControl>
                 <FormDescription>
                   Use 1 or 2 related keywords, and mention 3-4 of the most
                   important areas that you've covered during your course.
                 </FormDescription>
-                {/* Display error message */}
-                <FormMessage>{errors.courseSubtitle?.message}</FormMessage>
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="courseDescription"
-            rules={{ required: "Course Description is Required" }}
-            render={({ field }) => (
-              <FormItem className="mt-3">
-                <FormLabel className="text-xl font-bold">Course description</FormLabel>
-                <FormControl>
-                  {/* Spread field props into Input */}
-                  <Textarea
-                  className="h-[200px] resize-none rounded-2xl"
-                  placeholder="Insert you course Description"
-                {...field}
-                {...register("courseDescription", {
-                  required: "Description is required",
-                  validate: (value) =>
-                    wordCount(value) >= 200 || `Must have at least 200 words (currently ${wordCount(value)})`,
-                })}
-              />
-                </FormControl>
-                <FormDescription>
-                  Description should have minimum 200 words
-                </FormDescription>
-                {/* Display error message */}
                 <FormMessage>{errors.courseSubtitle?.message}</FormMessage>
               </FormItem>
             )}
           />
 
-          {/* Submit Button */}
-          <Button type="submit">Next</Button>
-        </form>
-      </Form>
-    </div>
+          {/* Course Description Field */}
+          <FormField
+            control={control}
+            name='courseDescription'
+            rules={{ required: 'Course Description is Required' }}
+            render={({ field }) => (
+              <FormItem className='mt-3'>
+                <FormControl>
+                  <Textarea
+                    className='h-[200px] resize-none rounded-2xl'
+                    placeholder='Insert your course Description'
+                    {...field}
+                    {...register('courseDescription', {
+                      required: 'Description is required',
+                      validate: value =>
+                        wordCount(value) >= 2 ||
+                        `Must have at least 200 words (currently ${wordCount(
+                          value
+                        )})`,
+                    })}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Description should have a minimum of 200 words.
+                </FormDescription>
+                <FormMessage>{errors.courseDescription?.message}</FormMessage>
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Basic Info Section */}
+        <div className='bg-[#F4F5F7] rounded-2xl py-[20px] px-[15px]'>
+          <h1 className='text-[30px] font-bold'>Basic Info</h1>
+          <div className='flex flex-wrap gap-4'>
+          <FormField
+              control={control}
+              name='courseLevel'
+              rules={{ required: 'Course Level is Required' }}
+              render={({ field }) => (
+                <FormItem className='mt-3 flex-1 min-w-[45%]'>
+                  <FormControl>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="justify-between w-full">
+                          {field.value || "Select Level"}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => field.onChange("Beginner")}>
+                          Beginner
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Intermediate")}>
+                          Intermediate
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Advanced")}>
+                          Advanced
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </FormControl>
+                  <FormMessage>{errors.courseLevel?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name='courseLanguage'
+              rules={{ required: 'Course Language is Required' }}
+              render={({ field }) => (
+                <FormItem className='mt-3 flex-1 min-w-[45%]'>
+                  <FormControl>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="justify-between w-full">
+                          {field.value || "Select Language"}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => field.onChange("English")}>
+                          English
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Spanish")}>
+                          Spanish
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("French")}>
+                          French
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("German")}>
+                          German
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </FormControl>
+                  <FormMessage>{errors.courseLanguage?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name='courseCategory'
+              rules={{ required: 'Course Category is Required' }}
+              render={({ field }) => (
+                <FormItem className='mt-3 flex-1 min-w-[45%]'>
+                  <FormControl>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="justify-between w-full">
+                          {field.value || "Select Category"}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => field.onChange("Web Development")}>
+                          Web Development
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Data Science")}>
+                          Data Science
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Mobile Development")}>
+                          Mobile Development
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("UI/UX Design")}>
+                          UI/UX Design
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </FormControl>
+                  <FormMessage>{errors.courseCategory?.message}</FormMessage>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name='courseSubcategory'
+              rules={{ required: 'Course Subcategory is Required' }}
+              render={({ field }) => (
+                <FormItem className='mt-3 flex-1 min-w-[45%]'>
+                  <FormControl>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="justify-between w-full">
+                          {field.value || "Select Subcategory"}
+                          <ChevronDown className="w-4 h-4" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem onClick={() => field.onChange("Frontend Development")}>
+                          Frontend Development
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Backend Development")}>
+                          Backend Development
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Machine Learning")}>
+                          Machine Learning
+                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => field.onChange("Mobile App Design")}>
+                          Mobile App Design
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </FormControl>
+                  <FormMessage>{errors.courseSubcategory?.message}</FormMessage>
+                </FormItem>
+              )}
+            />       
+          </div>
+        </div>
+
+        {/* Submit Button */}
+        <Button type='submit'>Next</Button>
+      </form>
+    </Form>
   );
 }
 

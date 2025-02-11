@@ -1,10 +1,10 @@
 import React from 'react'
-import LandingPageForm from '../../_components/LandingPageForm'
+import LandingPageForm from '../../../_components/LandingPageForm'
 import Link from 'next/link'
 
 function CourseLandingFormPage() {
   return (
-    <div>
+    <div className='p-2'>
       <div className='p-2 font-inter'>
         <h1 className='my-2 text-3xl font-bold'>Course Landing Page</h1>
         <p>Your course landing page is crucial to you success on CodeBite.</p>
