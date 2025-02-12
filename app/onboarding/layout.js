@@ -12,9 +12,7 @@ export const metadata = {
 
 export default function OnboardingLayout({ children }) {
   return (
-    <html lang="en">
-      <body>
-        <OnboardingProvider>
+    <OnboardingProvider>
           <SidebarProvider>
             <FormSideBar />
             <main>
@@ -22,9 +20,7 @@ export default function OnboardingLayout({ children }) {
               {children}
             </main>
           </SidebarProvider>
-        </OnboardingProvider>
+    </OnboardingProvider>
 
-      </body>
-    </html>
   );
 }

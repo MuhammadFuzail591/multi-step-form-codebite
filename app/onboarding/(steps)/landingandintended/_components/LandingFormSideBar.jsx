@@ -9,12 +9,12 @@ import { Button } from "@/components/ui/button";
 const items = [
     {
       title: "Landing page",
-      url: "#",
+      url: "/onboarding/landingandintended/courselandingpage",
       icon: File,
     },
     {
       title: "Intended Learners",
-      url: "#",
+      url: "/onboarding/landingandintended/intendedlearners",
       icon: GraduationCap,
     },
     {
