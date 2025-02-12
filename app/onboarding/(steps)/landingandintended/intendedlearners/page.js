@@ -6,9 +6,8 @@ function page() {
   return (
     <div className='p-2'>
       <div className='p-2 font-inter'>
-        <h1 className='my-2 text-3xl font-bold'>Course Landing Page</h1>
-        <p>Your course landing page is crucial to you success on CodeBite.</p>
-        <p>Learn more about <Link href={"#"} className='text-blue-500'>creating your course landing page</Link> and <Link href={"#"} className='text-blue-500'>course title standards</Link></p>
+        <h1 className='my-2 text-3xl font-bold'>Intended learners</h1>
+        <p>The following descriptions will be publicly visible on your <Link href={"#"} className='text-blue-500'>Course Landing Page</Link>  and will have a direct impact on your course performance. These descriptions will help learners decide if your course is right for them.</p>
       </div>
       <IntendedLearnersForm/>
     </div>
