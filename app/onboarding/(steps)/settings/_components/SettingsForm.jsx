@@ -6,20 +6,18 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useOnboarding } from '@/context/OnboardingContext';
 import { ChevronDown } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React from 'react'
 import { useForm } from 'react-hook-form'
 
-function PricingForm() {
+function SettingsForm() {
 
     const { updateOnboardingData, onboardingData } = useOnboarding();
 
     const form = useForm({
         defaultValues: {
-            currency: '',
-            priceTier: '',
-            paymentMethod: '',
-            formDelivery: ''
+            courseStatus: '',
+            enrollmentPrivacy: '',
+            instructorPermissions: ''
         },
 
         onBlur: 'onBlur'
@@ -32,27 +30,25 @@ function PricingForm() {
         register,
     } = form;
 
-    const router = useRouter()
-    
+
     function onSubmit(data) {
         updateOnboardingData({
             ...onboardingData,
-            currency: data.currency,
-            priceTier:data.priceTier,
-            paymentMethod:data.paymentMethod,
-            formDelivery:data.formDelivery
+            courseStatus: data.courseStatus,
+            enrollmentPrivacy: data.enrollmentPrivacy,
+            instructorPermissions: data.instructorPermissions
         });
         console.log(data)
-        router.push("/onboarding/settings")
     }
 
     return (
         <Form {...form} >
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
                 <div className='bg-[#F4F5F7] rounded-2xl border p-[15px] w-12/12'>
-                    <h1 className='text-[20px] mb-3 font-bold '>Set a price for your course</h1>
-                    <div className='flex flex-col justify-between gap-4 lg:flex-row'>
-                        <div className='lg:w-6/12'>
+                    <h1 className='text-[20px] font-bold '>Course status</h1>
+                    <p className='mb-3 text-sm'>This course is not published on the Codebite.</p>
+                    <div className='flex flex-col justify-between gap-4'>
+                        {/* <div className='lg:w-8/12'>
                             <FormLabel>Currency</FormLabel>
                             <FormField
                                 control={control}
@@ -86,7 +82,7 @@ function PricingForm() {
                                 )}
                             />
                         </div>
-                        <div className='lg:w-6/12'>
+                        <div className='lg:w-8/12'>
                             <FormLabel>Price Tier</FormLabel>
                             <FormField
                                 control={control}
@@ -115,90 +111,55 @@ function PricingForm() {
                                                 </DropdownMenuContent>
                                             </DropdownMenu>
                                         </FormControl>
-                                        <FormMessage>{errors.priceTier?.message}</FormMessage>
+                                        <FormMessage>{errors.currency?.message}</FormMessage>
                                     </FormItem>
                                 )}
                             />
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <div className='bg-[#F4F5F7] rounded-2xl border p-[15px] w-12/12'>
-                    <h1 className='text-[20px] mb-1 font-bold '>Payment Method</h1>
-                    <p className='text-sm'>Choose your payout method below. Connecting to a new payout method may take a few days.</p>
-                    <p className='text-sm'>You won't receive payments to the new linked accournt untill its status in approved.</p>
-                    <p className='mb-3 text-sm text-blue-500'><Link href="#">Learn more about payment methods.</Link></p>
-                    <div className='flex justify-between gap-4'>
+                    <h1 className='text-[20px] mb-1 font-bold '>Enrollment (Privacy)</h1>
+                    <p className='text-sm'>Public courses show up in search results and are available for anyone to take on Codebite.</p>
+                    <div className='lg:w-8/12'>
                         <FormField
                             control={control}
-                            name="paymentMethod"
-                            rules={{ required: 'Payment Method selection is needed' }}
+                            name='enrollmentPrivacy'
+                            rules={{ required: 'Enrollement Privacy Selection is required' }}
                             render={({ field }) => (
-                                <FormItem>
+                                <FormItem className="flex items-center space-x-3 space-y-0 flex-1 min-w-[45%]">
                                     <FormControl>
-                                        <RadioGroup
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                            className='flex flex-col space-y-3'
-                                        >
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="paypal" />
-                                                </FormControl>
-                                                <FormLabel className="font-bold">PayPal</FormLabel>
-                                            </FormItem>
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="payoneer" />
-                                                </FormControl>
-                                                <FormLabel className="font-bold">Payoneer (Prepaid masterCard, Local Bank transfer)</FormLabel>
-                                            </FormItem>
-                                        </RadioGroup>
+                                        <DropdownMenu>
+                                            <DropdownMenuTrigger className='rounded-xl' asChild>
+                                                <Button variant="outline" className="justify-between w-full">
+                                                    {field.value || "Select Privacy"}
+                                                    <ChevronDown className="w-4 h-4" />
+                                                </Button>
+                                            </DropdownMenuTrigger>
+                                            <DropdownMenuContent>
+                                                <DropdownMenuItem onClick={() => field.onChange("public")}>
+                                                    Public
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => field.onChange("private")}>
+                                                    Private
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem onClick={() => field.onChange("key-based")}>
+                                                    Key based
+                                                </DropdownMenuItem>
+                                            </DropdownMenuContent>
+                                        </DropdownMenu>
                                     </FormControl>
-                                </FormItem>
-                            )}
-                        />
-                    </div>
-                </div>
-                <div className='bg-[#F4F5F7] rounded-2xl border p-[15px] w-12/12'>
-                    <h1 className='text-[20px] mb-1 font-bold '>Tax Form E-Delivery</h1>
-                    <p className='mb-2 text-sm'>Got green and get your year-end tax forms electronically (Codebite won't send a copy by mail).</p>
-                    <div className='flex justify-between gap-4'>
-                        <FormField
-                            control={control}
-                            name="formDelivery"
-                            rules={{ required: 'Form E-Dilivery selection is needed' }}
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormControl>
-                                        <RadioGroup
-                                            onValueChange={field.onChange}
-                                            defaultValue={field.value}
-                                            className='flex flex-col space-y-3'
-                                        >
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="e-delivery" />
-                                                </FormControl>
-                                                <FormLabel className="font-bold">E-Delivery</FormLabel>
-                                            </FormItem>
-                                            <FormItem className="flex items-center space-x-3 space-y-0">
-                                                <FormControl>
-                                                    <RadioGroupItem value="paper-delivery" />
-                                                </FormControl>
-                                                <FormLabel className="font-bold">Paper Delivery</FormLabel>
-                                            </FormItem>
-                                        </RadioGroup>
-                                    </FormControl>
+                                    <FormMessage>{errors.enrollmentPrivacy?.message}</FormMessage>
                                 </FormItem>
                             )}
                         />
                     </div>
                 </div>
 
-                <Button type = "submit"> Submit </Button>
+                <Button type="submit"> Submit </Button>
             </form>
         </Form>
     )
 }
 
-export default PricingForm
+export default SettingsForm

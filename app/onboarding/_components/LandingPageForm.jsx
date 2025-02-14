@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { useState, useCallback } from "react";
 import { useOnboarding } from "@/context/OnboardingContext";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { FileUpload } from "./FileUpload";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
@@ -100,12 +100,13 @@ function LandingPageForm() {
         <div className="bg-[#F4F5F7] rounded-2xl py-[20px] px-[15px]">
           <h1 className="text-[22px] font-bold">General Info</h1>
           {/* Course Title Field */}
+          <FormLabel className="text-lg font-bold ">Course title</FormLabel>
           <FormField
             control={control}
             name="courseTitle"
             rules={{ required: "Course Title is Required" }}
             render={({ field }) => (
-              <FormItem className="mt-3">
+              <FormItem className="mb-2">
                 <FormControl>
                   <Input
                     className="h-12 rounded-2xl"
@@ -123,12 +124,13 @@ function LandingPageForm() {
           />
 
           {/* Course Subtitle Field */}
+          <FormLabel className="text-lg font-bold ">Course Subtitle</FormLabel>
           <FormField
             control={control}
             name="courseSubtitle"
             rules={{ required: "Course Subtitle is Required" }}
             render={({ field }) => (
-              <FormItem className="mt-3">
+              <FormItem className="mb-3">
                 <FormControl>
                   <Input
                     className="h-12 rounded-2xl"
@@ -146,12 +148,13 @@ function LandingPageForm() {
           />
 
           {/* Course Description Field */}
+          <FormLabel className="text-lg font-bold ">Course Description</FormLabel>
           <FormField
             control={control}
             name="courseDescription"
             rules={{ required: "Course Description is Required" }}
             render={({ field }) => (
-              <FormItem className="mt-3">
+              <FormItem className="mt-1">
                 <FormControl>
                   <Textarea
                     className="h-[200px] resize-none rounded-2xl"

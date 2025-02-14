@@ -15,7 +15,7 @@ export default function OnboardingLayout({ children }) {
     <OnboardingProvider>
           <SidebarProvider>
             <FormSideBar />
-            <main>
+            <main className="w-full mx-auto">
               <SidebarTrigger />
               {children}
             </main>

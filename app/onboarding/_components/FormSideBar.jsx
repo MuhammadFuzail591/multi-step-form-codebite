@@ -1,6 +1,5 @@
 import { Calendar, Home, Inbox, Circle, Settings, CircleArrowLeft, LoaderCircle } from "lucide-react"
 import { FaRegCircle } from "react-icons/fa";
-import { LuLoaderCircle } from "react-icons/lu";
 
 
 
@@ -12,22 +11,22 @@ import { Button } from "@/components/ui/button";
 const items = [
     {
       title: "Course landing page",
-      url: "#",
+      url: "/onboarding/landingandintended/courselandingpage",
       icon: Circle,
     },
     {
       title: "Curriculum",
-      url: "#",
+      url: "/onboarding/curriculum",
       icon: Inbox,
     },
     {
       title: "Pricing",
-      url: "#",
+      url: "/onboarding/pricing",
       icon: Calendar,
     },
     {
       title: "Settings",
-      url: "#",
+      url: "/onboarding/settings",
       icon: Settings,
     },
   ]

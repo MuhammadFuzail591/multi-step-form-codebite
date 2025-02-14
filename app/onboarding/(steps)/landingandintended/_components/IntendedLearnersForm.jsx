@@ -6,9 +6,12 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input";
 import { Plus, X } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function DynamicFormComponent() {
   const { updateOnboardingData, onboardingData } = useOnboarding(); // Access the same context
+
+  const router = useRouter()
   const form = useForm({
     defaultValues: {
       learningObjectives: onboardingData.learningObjectives || [""], // Array of strings
@@ -58,6 +61,8 @@ function DynamicFormComponent() {
       requirements: data.requirements,
       intendedLearners: data.intendedLearners,
     });
+
+    router.push("/onboarding/pricing")
   };
 
   return (
@@ -169,7 +174,7 @@ function DynamicFormComponent() {
               }
             </div>
           ))}
-          <Button type="button" variant="outline       " onClick={() => addSection("intendedLearners")} className="flex items-center gap-2 mt-4 bg-white ">
+          <Button type="button" variant="outline" onClick={() => addSection("intendedLearners")} className="flex items-center gap-2 mt-4 bg-white ">
             <Plus size={16} /> Add more to your response
           </Button>
         </div>
