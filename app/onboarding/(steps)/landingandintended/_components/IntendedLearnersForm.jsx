@@ -9,9 +9,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function DynamicFormComponent() {
+  
   const { updateOnboardingData, onboardingData } = useOnboarding(); // Access the same context
 
   const router = useRouter()
+  
   const form = useForm({
     defaultValues: {
       learningObjectives: onboardingData.learningObjectives || [""], // Array of strings

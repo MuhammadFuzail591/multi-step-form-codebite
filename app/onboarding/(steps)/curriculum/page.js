@@ -1,9 +1,13 @@
 import React from 'react'
+import CurriculumForm from './_components/CurriculumForm'
 
-function page() {
+function CurriculumPage() {
   return (
-    <div>page</div>
+    <div>
+      This is curriculum page.
+      <CurriculumForm/>
+    </div>
   )
 }
 
-export default page
+export default CurriculumPage
