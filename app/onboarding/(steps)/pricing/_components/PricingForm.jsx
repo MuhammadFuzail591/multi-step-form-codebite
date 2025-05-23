@@ -33,16 +33,23 @@ function PricingForm() {
     } = form;
 
     const router = useRouter()
-    
+
+    console.log(onboardingData)
     function onSubmit(data) {
         updateOnboardingData({
             ...onboardingData,
             currency: data.currency,
-            priceTier:data.priceTier,
-            paymentMethod:data.paymentMethod,
-            formDelivery:data.formDelivery
+            priceTier: data.priceTier,
+            paymentMethod: data.paymentMethod,
+            formDelivery: data.formDelivery
         });
-        console.log(data)
+        console.log("Updated Context data: ", {
+            ...onboardingData,
+            currency: data.currency,
+            priceTier: data.priceTier,
+            paymentMethod: data.paymentMethod,
+            formDelivery: data.formDelivery
+        })
         router.push("/onboarding/settings")
     }
 
@@ -195,7 +202,7 @@ function PricingForm() {
                     </div>
                 </div>
 
-                <Button type = "submit"> Submit </Button>
+                <Button type="submit"> Submit </Button>
             </form>
         </Form>
     )
